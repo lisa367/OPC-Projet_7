@@ -11,11 +11,31 @@ prices = []
 profits = []
 
 
-def clean_data(string):
+def clean_data1(string):
     splitted_str = string.split(";")
+    #print(splitted_str)
     sliced_list = splitted_str[:3]
+    #print(sliced_list)
+    
     sliced_list[1] = int(sliced_list[1].replace(",", "."))
     sliced_list[2] = round(float(sliced_list[2].replace(",", ".")), 1)
+   
+    """ sliced_list[1] = int(float(sliced_list[1]))
+    sliced_list[2] = float(sliced_list[2]) """
+    return sliced_list
+
+
+def clean_data2(string):
+    splitted_str = string.split(",")
+    #print(splitted_str)
+    sliced_list = splitted_str[:3]
+    #print(sliced_list)
+    """ 
+    sliced_list[1] = int(sliced_list[1].replace(",", "."))
+    sliced_list[2] = round(float(sliced_list[2].replace(",", ".")), 1)
+    """
+    sliced_list[1] = int(float(sliced_list[1]))
+    sliced_list[2] = float(sliced_list[2])
     return sliced_list
     
 
@@ -25,7 +45,7 @@ def import_data(file):
         dataset = csv.reader(file, delimiter=" ", quotechar="|")
         # print(list(dataset))
         for row in list(dataset)[1:]:
-            new_row = clean_data(row[0])
+            new_row = clean_data1(row[0])
             # print(new_row)
             data = tuple(new_row)
             raw_data.append(data)
@@ -37,7 +57,7 @@ def import_data(file):
 
 # import_data(file_to_import)
 
-def output_best_portfolio(matrix, n, shares_list):
+""" def output_best_portfolio(matrix, n, shares_list):
     best_portfolio = []
     i = n
     j = BUDGET_MAX
@@ -48,19 +68,21 @@ def output_best_portfolio(matrix, n, shares_list):
             best_portfolio.append(shares_list[i-1])
             j -= prices[i]
         i -= 1
-    return best_portfolio
+    return best_portfolio """
 
 
 def knapsack_algorithm(n):
     matrix = [[0 for j in range(BUDGET_MAX+1)] for i in range(n+1)]
-    # print(matrix)
+    print(len(matrix[0]),len(matrix))
 
     for i in range(n+1):
         for j in range(1,BUDGET_MAX+1):
+            #print(i, j)
             if i == 0 or j == 0:
                 matrix[i][j] = 0
             elif prices[i-1] <= j :
                 matrix[i][j] = max(profits[i-1] + matrix[i-1][j-prices[i-1]], matrix[i-1][j])
+                print(matrix[i][j])
                 # Arg1 = profit of share[i] + profit of element at position in the row above at column [current buget - current price] (j-prices(i))
                 # Arg2 = the data in row above in the matrix ([i-1]), on the same column j
                 # selects the max value between Arg1 and Arg2
@@ -123,10 +145,11 @@ def knapsack_algorithm(n):
 
 if __name__ == "__main__":
     import_data(file_to_import)
-    # print(raw_data)
-    # print(shares)
-    # print(prices)
-    # print(profits)
+    #print(raw_data)
+    #print(shares)
+    #print(prices)
+    #print(profits)
+    print(len(shares))
     best_profit, best_portfolio = knapsack_algorithm(n=len(shares))
     print(f"Best portfolio : {best_portfolio}")
     print(f"Best profit : {best_profit}")
