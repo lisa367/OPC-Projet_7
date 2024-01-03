@@ -1,6 +1,5 @@
 import sys
 import csv
-import pandas as pd
 
 BUDGET_MAX = 500 or sys.arg[2]
 file_to_import = sys.argv[1]
@@ -39,7 +38,7 @@ def import_data(file):
     return raw_data
 
 
-def knapsack_algorithm(n):
+def optimized_algorithm(n):
     matrix = [[0 for j in range(BUDGET_MAX+1)] for i in range(n+1)]
 
     for i in range(n+1):
@@ -76,7 +75,7 @@ def knapsack_algorithm(n):
 
 if __name__ == "__main__":
     import_data(file_to_import)    
-    best_profit, best_portfolio, estimated_cost = knapsack_algorithm(n=len(shares))
+    best_profit, best_portfolio, estimated_cost = optimized_algorithm(n=len(shares))
     print(f"Best portfolio : {best_portfolio}")
     print(f"Estimated cost : {estimated_cost}")
     print(f"Best profit : {best_profit}")

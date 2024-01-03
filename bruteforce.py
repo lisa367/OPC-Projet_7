@@ -21,8 +21,6 @@ def clean_data(string):
 
 # Import et calcul des benefices
 def import_data(file):
-    #raw_data = []
-    #raw_dict = {}
     with open(file, newline="") as file:
         dataset = csv.reader(file, delimiter=" ", quotechar="|")
         # print(list(dataset))
@@ -72,8 +70,8 @@ def sort_combinations(combinations_list):
     """ # combination = (shares, prix, profit)
     # combinations_list = list of all combinations --> [(), (), (), ...] """
     sort_by_profit = sorted(combinations_list, key=itemgetter(2))
-    #print(sort_by_profit)
-    # sort_by_price = sorted(sort_by_profit, key=itemgetter(1), reverse=True)
+    """ #print(sort_by_profit)
+    # sort_by_price = sorted(sort_by_profit, key=itemgetter(1), reverse=True) """
     return sort_by_profit
 
 
